@@ -371,7 +371,7 @@
 
         // 等待 KaTeX 加载完成
         window.addEventListener('load', () => {
-            fetch('../blog1.md')
+            fetch('../blogs/blog1.md')
                 .then(response => response.text())
                 .then(text => {
                     // 预处理 LaTeX 公式
