@@ -89,6 +89,22 @@ def create_new_blog():
         index_content[insert_point:]
     )
     
+    # 添加归档条目
+    archive_entry = f"""            <li>
+                <span class="date">{current_date}</span>
+                <a href="blogs/{new_blog_file}">{title}</a>
+            </li>
+"""
+    
+    archive_start = index_content.find('<ul class="archive-list">')
+    archive_insert_point = index_content.find('<li>', archive_start)
+    
+    index_content = (
+        index_content[:archive_insert_point] +
+        archive_entry +
+        index_content[archive_insert_point:]
+    )
+    
     with open(index_path, "w", encoding="utf-8") as f:
         f.write(index_content)
     
@@ -134,6 +150,7 @@ def delete_blog():
                 with open("index.html", "r", encoding="utf-8") as f:
                     index_content = f.read()
                 
+                # 移除博客列表条目
                 blog_entry_start = index_content.find(f'<a href="blogs/{blog_file}">')
                 if blog_entry_start != -1:
                     article_start = index_content.rfind('<article class="blog-post">', 0, blog_entry_start)
@@ -142,9 +159,18 @@ def delete_blog():
                     if article_start != -1 and article_end != -1:
                         index_content = index_content[:article_start] + index_content[article_end:]
                         
-                        with open("index.html", "w", encoding="utf-8") as f:
-                            f.write(index_content)
-                        print("已从首页移除博客条目")
+                # 移除归档条目
+                archive_entry_start = index_content.find(f'<a href="blogs/{blog_file}">', blog_entry_start)
+                if archive_entry_start != -1:
+                    li_start = index_content.rfind('<li>', 0, archive_entry_start)
+                    li_end = index_content.find('</li>', archive_entry_start) + 5
+                    
+                    if li_start != -1 and li_end != -1:
+                        index_content = index_content[:li_start] + index_content[li_end:]
+                
+                with open("index.html", "w", encoding="utf-8") as f:
+                    f.write(index_content)
+                print("已从首页移除博客条目")
                 
                 git_sync(f"Delete blog: {blog_file}")
                 print("\n删除完成！")
