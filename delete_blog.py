@@ -1,4 +1,5 @@
 import os
+from git_sync import git_sync
 
 def list_blogs():
     """列出所有可用的博客"""
@@ -58,6 +59,9 @@ def delete_blog(blog_file):
             with open("index.html", "w", encoding="utf-8") as f:
                 f.write(index_content)
             print("已从首页移除博客条目")
+    
+    # 在删除完成后进行git同步
+    git_sync(f"Delete blog: {blog_file}")
 
 def main():
     while True:

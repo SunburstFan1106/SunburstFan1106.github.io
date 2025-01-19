@@ -1,6 +1,7 @@
 import os
 import shutil
 from datetime import datetime
+from git_sync import git_sync
 
 def create_new_blog(title, description, markdown_path):
     # Convert relative path to absolute path if needed
@@ -78,6 +79,9 @@ def create_new_blog(title, description, markdown_path):
     print(f"Blog created successfully: {new_blog_file}")
     print(f"Markdown file copied to: {new_md_file}")
     print(f"Index.html updated")
+    
+    # 添加git同步
+    git_sync(f"Add new blog: {title}")
 
 if __name__ == "__main__":
     title = input("Enter blog title: ")
