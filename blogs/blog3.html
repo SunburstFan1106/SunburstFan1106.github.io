@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自动化删除</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.0.0/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-image: url('https://cdn.luogu.com.cn/upload/image_hosting/c245v0ke.png');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            color: #2c3e50;
+        }
+        /* ...existing nav, container, header, footer styles from content.html... */
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr minmax(auto, 900px) minmax(auto, 250px) 1fr;
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .blog-content {
+            grid-column: 2;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            backdrop-filter: blur(8px);
+            line-height: 1.8;
+            font-size: 16px;
+            text-align: left;  /* 修改为左对齐 */
+        }
+        
+        .blog-content h2, .blog-content h3, .blog-content h4 {
+            text-align: left;  /* 修改为左对齐 */
+            margin: 2em 0 1em;  /* 修改边距 */
+        }
+
+        .blog-content p {
+            margin: 1.2em 0;
+            line-height: 1.8;
+        }
+
+        .blog-content pre {
+            margin: 1.5em 0;
+            background: #282c34;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .blog-content pre::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+        }
+        
+        .blog-content pre code {
+            display: block;
+            padding: 1.5em;
+            overflow-x: auto;
+            font-size: 0.9em;
+            line-height: 1.6;
+            font-family: 'Fira Code', Consolas, Monaco, monospace;
+            background: transparent;
+        }
+
+        .blog-content code {
+            background: rgba(248, 249, 250, 0.9);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: Consolas, Monaco, 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .blog-content code:not(pre code) {
+            background: rgba(40, 44, 52, 0.05);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Fira Code', Consolas, Monaco, monospace;
+            font-size: 0.9em;
+            color: #e06c75;
+        }
+
+        .blog-content pre code::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .blog-content pre code::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+        }
+
+        .blog-content pre code::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.1);
+        }
+
+        .blog-content a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .blog-content a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+
+        .sidebar {
+            grid-column: 3;  /* 调整位置 */
+            position: sticky;
+            top: 2rem;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            height: fit-content;
+            padding: 1rem;
+            border-radius: 12px;
+        }
+
+        .sidebar h3 {
+            color: #2980b9;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(41, 128, 185, 0.2);
+            font-size: 1.3em;
+        }
+
+        #toc {
+            padding: 0.5rem;
+        }
+
+        #toc a {
+            display: block;
+            padding: 0.4em 0;
+            color: #2c3e50;
+            text-decoration: none;
+            transition: all 0.2s;
+            border-radius: 4px;
+            margin: 2px 0;
+            font-size: 0.95em;
+        }
+
+        #toc a:hover {
+            background: rgba(52, 152, 219, 0.1);
+            padding-left: 1em;
+        }
+
+        #toc a[data-level="h2"] {
+            font-weight: bold;
+            color: #2980b9;
+            margin-top: 0.8em;
+        }
+
+        #toc a[data-level="h3"] {
+            padding-left: 1.2em;
+            color: #34495e;
+            position: relative;
+        }
+
+        #toc a[data-level="h3"]::before {
+            content: "›";
+            position: absolute;
+            left: 0.5em;
+            color: #95a5a6;
+        }
+
+        #toc a[data-level="h4"] {
+            padding-left: 2.4em;
+            font-size: 0.9em;
+            color: #7f8c8d;
+            position: relative;
+        }
+
+        #toc a[data-level="h4"]::before {
+            content: "»";
+            position: absolute;
+            left: 1.7em;
+            color: #bdc3c7;
+        }
+
+        #toc a.active {
+            background: rgba(52, 152, 219, 0.1);
+            color: #2980b9;
+            padding-left: 1em;
+        }
+
+        header {
+            text-align: center;
+            padding: 4rem 0;
+            background: transparent;
+            color: white;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .math-block {
+            overflow-x: auto;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+        .katex-display {
+            margin: 1.5em auto;
+            padding: 1em;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            max-width: 100%;
+        }
+
+        @media (max-width: 1400px) {
+            .container {
+                grid-template-columns: 1fr minmax(auto, 700px) minmax(auto, 200px) 1fr;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .container {
+                grid-template-columns: 1fr minmax(auto, 900px) 1fr;
+            }
+            .blog-content {
+                grid-column: 2;
+            }
+            .sidebar {
+                grid-column: 2;
+            }
+        }
+
+        nav {
+            background: transparent;
+            backdrop-filter: blur(8px);
+            color: white;
+            padding: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            box-shadow: none;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: rgba(255, 255, 255, 0.8);
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+
+        /* 调整文章标题样式 */
+        .blog-content h2:first-child {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="../index.html">首页</a></li>
+            <li><a href="#archive">归档</a></li>
+            <li><a href="#about">关于我</a></li>
+            <li><a href="#contact">联系方式</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>自动化删除</h1>
+        <p>测试能否自动删除</p>
+    </header>
+
+    <div class="container">
+        <main class="blog-content" id="content">
+            <!-- Markdown content will be rendered here -->
+        </main>
+
+        <aside class="sidebar">
+            <h3>目录</h3>
+            <div id="toc"></div>
+        </aside>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 我的编程博客. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // 扩展 marked 以支持数学公式
+        const renderer = new marked.Renderer();
+        const originalCode = renderer.code.bind(renderer);
+        
+        renderer.code = function(code, language) {
+            if (language === 'math') {
+                return `<div class="math-block">${code}</div>`;
+            }
+            // 使用 highlight.js 进行代码高亮
+            const validLanguage = hljs.getLanguage(language) ? language : 'plaintext';
+            const highlighted = hljs.highlight(code, {language: validLanguage}).value;
+            return `<pre><code class="hljs language-${validLanguage}">${highlighted}</code></pre>`;
+        };
+
+        // 自定义数学公式处理
+        const mathExtension = {
+            name: 'math',
+            level: 'inline',
+            start(src) { return src.match(/\$/)?.index; },
+            tokenizer(src) {
+                const match = src.match(/^\$+([^$\n]+?)\$+/);
+                if (match) {
+                    return {
+                        type: 'math',
+                        raw: match[0],
+                        text: match[1].trim()
+                    };
+                }
+            },
+            renderer(token) {
+                return `\\(${token.text}\\)`;
+            }
+        };
+
+        marked.use({ extensions: [mathExtension] });
+        marked.setOptions({
+            renderer: renderer,
+            gfm: true,
+            breaks: true
+        });
+
+        // 等待 KaTeX 加载完成
+        window.addEventListener('load', () => {
+            fetch('../blogs/blog3.md')
+                .then(response => response.text())
+                .then(text => {
+                    // 预处理 LaTeX 公式
+                    text = text.replace(/\$\$([\s\S]+?)\$\$/g, '\n```math\n$1\n```\n');
+                    
+                    // 渲染 Markdown
+                    const rendered = marked.parse(text);
+                    document.getElementById('content').innerHTML = rendered;
+                    
+                    // 渲染数学公式
+                    renderMathInElement(document.getElementById('content'), {
+                        delimiters: [
+                            {left: "$$", right: "$$", display: true},
+                            {left: "$", right: "$", display: false},
+                            {left: "\\(", right: "\\)", display: false},
+                            {left: "\\[", right: "\\]", display: true}
+                        ],
+                        throwOnError: false,
+                        strict: false,
+                        trust: true,
+                        macros: {
+                            "\\cases": "\\begin{cases}#1\\end{cases}"
+                        }
+                    });
+
+                    // 初始化代码高亮
+                    document.querySelectorAll('pre code').forEach(block => {
+                        hljs.highlightBlock(block);
+                    });
+
+                    // 生成目录
+                    generateTOC();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('content').innerHTML = 
+                        '<p style="color: red">加载文档失败，请检查文件路径或网络连接。</p>';
+                });
+        });
+
+        // 修改目录生成函数
+        function generateTOC() {
+            const toc = document.getElementById('toc');
+            toc.innerHTML = '';
+
+            // 创建目录树结构
+            const tocTree = {children: [], level: 0};
+            let currentNode = tocTree;
+            const nodeStack = [tocTree];
+
+            // 获取所有标题并生成目录树
+            document.querySelectorAll('.blog-content h2, .blog-content h3, .blog-content h4').forEach((heading, index) => {
+                const level = parseInt(heading.tagName[1]);
+                const text = heading.textContent.trim();
+                const id = `section-${index}`;
+                heading.id = id;
+
+                const node = {
+                    id,
+                    text,
+                    level,
+                    children: [],
+                    parent: null
+                };
+
+                // 调整当前节点位置
+                while (nodeStack[nodeStack.length - 1].level >= level) {
+                    nodeStack.pop();
+                }
+                currentNode = nodeStack[nodeStack.length - 1];
+                node.parent = currentNode;
+                currentNode.children.push(node);
+                nodeStack.push(node);
+            });
+
+            // 渲染目录树
+            function renderTOC(node, container, level = 0) {
+                if (!node.id) {
+                    node.children.forEach(child => renderTOC(child, container, level));
+                    return;
+                }
+
+                const item = document.createElement('div');
+                item.className = 'toc-item';
+                
+                const link = document.createElement('a');
+                link.href = '#' + node.id;
+                link.textContent = node.text;
+                link.dataset.level = `h${node.level}`;
+                link.dataset.parentId = node.parent?.id || 'root';
+                
+                item.appendChild(link);
+                container.appendChild(item);
+
+                if (node.children.length > 0) {
+                    const subContainer = document.createElement('div');
+                    subContainer.className = 'toc-sub';
+                    item.appendChild(subContainer);
+                    node.children.forEach(child => renderTOC(child, subContainer, level + 1));
+                }
+            }
+
+            renderTOC(tocTree, toc);
+
+            // 监听滚动事件
+            const headings = Array.from(document.querySelectorAll('.blog-content h2, .blog-content h3, .blog-content h4'));
+            let lastActiveId = null;
+
+            function updateActiveHeading() {
+                const viewportHeight = window.innerHeight;
+                const scrollPosition = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight;
+                
+                // 检查是否接近文档底部
+                const isNearBottom = (scrollPosition + viewportHeight) >= docHeight - 50;
+                
+                if (isNearBottom) {
+                    // 如果接近底部，直接激活最后一个标题
+                    const lastHeading = headings[headings.length - 1];
+                    if (lastHeading && lastHeading.id !== lastActiveId) {
+                        document.querySelectorAll('#toc a').forEach(link => {
+                            link.classList.remove('active', 'parent-active');
+                        });
+                        
+                        const tocLink = document.querySelector(`#toc a[href="#${lastHeading.id}"]`);
+                        if (tocLink) {
+                            tocLink.classList.add('active');
+                            // 高亮父级目录
+                            let parent = tocLink.parentElement;
+                            while (parent) {
+                                const parentLink = parent.querySelector(':scope > a');
+                                if (parentLink) {
+                                    parentLink.classList.add('parent-active');
+                                }
+                                parent = parent.parentElement.closest('.toc-item');
+                            }
+                        }
+                        lastActiveId = lastHeading.id;
+                    }
+                    return;
+                }
+                
+                // 正常滚动时的处理
+                const visibleHeadings = headings.map(heading => {
+                    const rect = heading.getBoundingClientRect();
+                    if (rect.top > viewportHeight) {
+                        return { heading, score: -Infinity };
+                    }
+                    if (rect.bottom < 0) {
+                        return { heading, score: -Infinity };
+                    }
+                    
+                    // 优化得分计算：越接近顶部得分越高
+                    const distanceFromIdeal = Math.abs(rect.top - 100);  // 理想位置为距离顶部100px
+                    const score = 1000 - distanceFromIdeal;
+                    
+                    return { heading, score };
+                });
+                
+                // 找出得分最高的可见标题
+                const bestHeading = visibleHeadings.reduce((a, b) => 
+                    a.score > b.score ? a : b
+                );
+                
+                if (bestHeading.heading && bestHeading.heading.id !== lastActiveId) {
+                    document.querySelectorAll('#toc a').forEach(link => {
+                        link.classList.remove('active', 'parent-active');
+                    });
+                    
+                    const tocLink = document.querySelector(`#toc a[href="#${bestHeading.heading.id}"]`);
+                    if (tocLink) {
+                        tocLink.classList.add('active');
+                        let parent = tocLink.parentElement;
+                        while (parent) {
+                            const parentLink = parent.querySelector(':scope > a');
+                            if (parentLink) {
+                                parentLink.classList.add('parent-active');
+                            }
+                            parent = parent.parentElement.closest('.toc-item');
+                        }
+                    }
+                    
+                    lastActiveId = bestHeading.heading.id;
+                }
+            }
+
+            // 使用 requestAnimationFrame 和防抖优化滚动处理
+            let scrollTimer = null;
+            window.addEventListener('scroll', () => {
+                if (scrollTimer) return;
+                scrollTimer = requestAnimationFrame(() => {
+                    updateActiveHeading();
+                    scrollTimer = null;
+                });
+            }, { passive: true });
+
+            // 初始化激活状态
+            updateActiveHeading();
+        }
+    </script>
+</body>
+</html>
