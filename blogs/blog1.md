@@ -34,7 +34,7 @@
 <!-- $\begin{cases} s_i=o \begin{cases} f_i= f_{i-1}+ 2\times g_{i-1} +1 \\ g_i=g_{i-1}+1 \end{cases}\\ \\ s_i=x \begin{cases} f_i= f_{i-1} \\ g_i=0 \\ \end{cases}\\ \\ s_i=?\ \ \begin{cases} f_i=f_{i-1}+g_{i-1}+0.5 \\ g_i=0.5\times g_{i-1} + 0.5  \end{cases}\\ \end{cases}$ -->
 
 时间复杂度 $O(N)$
-
+<!-- 
 后续的相关练习：
 
 ### [P4927 [1007] 梦美与线段树](https://www.luogu.com.cn/problem/P4927)
@@ -61,7 +61,7 @@
 
 怎么维护呢？考虑每次更新，设增加的数值为 $\Delta V$。
 
-那么 $rt$ 节点的平方和就成为了 $(sum_{rt} + len_{rt} \times \Delta V)^2$。
+<!-- 那么 $rt$ 节点的平方和就成为了 $(sum_{rt} + len_{rt} \times \Delta V)^2$。 -->
 
 考虑完全平方公式展开：
 
@@ -69,15 +69,15 @@
 
 $len$ 和 ${len}^2$ 都可以在线段树的 `build` 阶段维护。
 
-那么我们只需要知道如何维护 $len_{rt} \times sum_{rt}$，这道题就做完了。
+<!-- 那么我们只需要知道如何维护 $len_{rt} \times sum_{rt}$，这道题就做完了。 -->
 
-每次更新，$len_rt \times sum_{rt}$ 就会变成 $len_{rt} \times (sum_{rt} + len_{rt} \times \Delta V)$
+<!-- 每次更新，$len_rt \times sum_{rt}$ 就会变成 $len_{rt} \times (sum_{rt} + len_{rt} \times \Delta V)$ -->
 
 再拆开来：
 
 <!-- $len_{rt} \times sum_{rt} + {len_{rt}}^2 \times \Delta V$。 -->
 
-所以每次更新，$len_{rt} \times sum_{rt}$ 只需要加上 ${len_{rt}}^2 \times \Delta V$ 即可， $len^2$ 前边已经说过如何维护了。
+所以每次更新，$len_{rt} \times sum_{rt}$ 只需要加上 ${len_{rt}}^2 \times \Delta V$ 即可， $len^2$ 前边已经说过如何维护了。 -->
 
 乍一看，这棵线段树要维护的东西似乎有点多，比较繁琐。
 
