@@ -31,7 +31,7 @@
 
 ##### 
 
-<!-- $\begin{cases} s_i=o \begin{cases} f_i= f_{i-1}+ 2\times g_{i-1} +1 \\ g_i=g_{i-1}+1 \end{cases}\\ \\ s_i=x \begin{cases} f_i= f_{i-1} \\ g_i=0 \\ \end{cases}\\ \\ s_i=?\ \ \begin{cases} f_i=f_{i-1}+g_{i-1}+0.5 \\ g_i=0.5\times g_{i-1} + 0.5  \end{cases}\\ \end{cases}$ -->
+$\begin{cases} s_i=o \begin{cases} f_i= f_{i-1}+ 2\times g_{i-1} +1 \\ g_i=g_{i-1}+1 \end{cases}\\ \\ s_i=x \begin{cases} f_i= f_{i-1} \\ g_i=0 \\ \end{cases}\\ \\ s_i=?\ \ \begin{cases} f_i=f_{i-1}+g_{i-1}+0.5 \\ g_i=0.5\times g_{i-1} + 0.5  \end{cases}\\ \end{cases}$
 
 时间复杂度 $O(N)$
 
@@ -49,35 +49,35 @@
 
 令当前节点为 $rt$，则不难看出进入 $rt$ 左子树的期望为：
 
-$sum_l \times P(l) = sum_l \times \frac {sum_l}{sum_rt} = \frac {sum_l^2}{sum_rt}$。
+$sum_l \times P(l) = sum_l \times \frac {sum_l}{sum_{rt}} = \frac {sum_l^2}{sum_{rt}}$。
 
 同理，进入 $rt$ 右子树的期望为：
 
-<!-- $sum_r \times P(r) = sum_r \times \frac {sum_r}{sum_{rt}} = \frac {{sum_r}^2}{sum_{rt}}$。 -->
+$sum_r \times P(r) = sum_r \times \frac {sum_r}{sum_{rt}} = \frac {sum_r^2}{sum_{rt}}$。
 
-<!-- 那么就可以得出 $rt$ 节点走过的权值和的期望值为：$\frac {{sum_l}^2+{sum_r}^2}{sum_{rt}}$。
+那么就可以得出 $rt$ 节点走过的权值和的期望值为：$\frac {sum_l^2+sum_r^2}{sum_{rt}}$。
 
 下半部分是很好维护的，仅需要维护区间和的线段树即可，而不难看出上半部分就是一个维护区间平方和。
 
-怎么维护呢？考虑每次更新，设增加的数值为 $\Delta V$。 -->
+怎么维护呢？考虑每次更新，设增加的数值为 $\Delta V$。
 
-<!-- 那么 $rt$ 节点的平方和就成为了 $(sum_{rt} + len_{rt} \times \Delta V)^2$。 -->
+那么 $rt$ 节点的平方和就成为了 $(sum_{rt} + len_{rt} \times \Delta V)^2$。
 
-<!-- 考虑完全平方公式展开： -->
+考虑完全平方公式展开：
 
-<!-- $(sum_{rt} + len_{rt} \times \Delta V)^2 = {sum_{rt}^2 + 2 \times len_{rt} \times sum_{rt} \times \Delta V + {len_{rt}}^2} \times {\Delta V}^2 $。 -->
+$(sum_{rt} + len_{rt} \times \Delta V)^2 = {sum_{rt}^2 + 2 \times len_{rt} \times sum_{rt} \times \Delta V + len_{rt}^2} \times {\Delta V}^2 $。
 
-<!-- $len$ 和 ${len}^2$ 都可以在线段树的 `build` 阶段维护。 -->
+$len$ 和 ${len}^2$ 都可以在线段树的 `build` 阶段维护。
 
-<!-- 那么我们只需要知道如何维护 $len_{rt} \times sum_{rt}$，这道题就做完了。 -->
+那么我们只需要知道如何维护 $len_{rt} \times sum_{rt}$，这道题就做完了。
 
-<!-- 每次更新，$len_rt \times sum_{rt}$ 就会变成 $len_{rt} \times (sum_{rt} + len_{rt} \times \Delta V)$ -->
+每次更新，$len_rt \times sum_{rt}$ 就会变成 $len_{rt} \times (sum_{rt} + len_{rt} \times \Delta V)$
 
 再拆开来：
 
-$len_{rt} \times sum_{rt} + {len_{rt}}^2 \times \Delta V$。
+$len_{rt} \times sum_{rt} + len_{rt}^2 \times \Delta V$。
 
-所以每次更新，$len_{rt} \times sum_{rt}$ 只需要加上 ${len_{rt}}^2 \times \Delta V$ 即可， $len^2$ 前边已经说过如何维护了。
+所以每次更新，$len_{rt} \times sum_{rt}$ 只需要加上 $len_{rt}^2 \times \Delta V$ 即可， $len^2$ 前边已经说过如何维护了。
 
 乍一看，这棵线段树要维护的东西似乎有点多，比较繁琐。
 
