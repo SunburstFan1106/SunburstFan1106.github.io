@@ -64,3 +64,88 @@ while(114514){
 
 cout<<ans<<"\n";
 ```
+
+### C - Coins
+
+#### 题目大意
+
+有 $X+Y+Z$ 个人，编号为 $1$ 到 $X+Y+Z$ 。人 $i$ 有 $A_i$ 枚金币、 $B_i$ 枚银币和 $C_i$ 枚铜币。
+
+斯努克想从 $X$ 人那里得到金币，从 $Y$ 人那里得到银币，从 $Z$ 人那里得到铜币。从一个人身上不可能得到两种或两种以上不同颜色的硬币。另一方面，一个人会把斯努克指定颜色的硬币全部给他/她。
+
+斯努克希望最大限度地增加他得到的所有颜色硬币的总数。请找出最大可能的硬币数量。
+
+#### 解题思路
+
+贪心好题。
+
+首先三种 $X,Y,Z$ 个数有点多，考虑先将答案加上 $\sum c_i$。
+
+然后将 $a_i$，$b_i$ 减去 $c_i$，问题就转化为了两部分。
+
+假定当前已经找出了最优的 $z$ 个人，那么怎样才能筛出最优的 $x$ 个人？
+
+显然是按照 $a_i-b_i$ 由大到小排序。
+
+对于所有人，全部先减去 $c_i$ 后按照 $a_i-b_i$ 排序，然后再用两个优先队列维护即可。
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);cout.tie(0); 
+
+    int x,y,z;
+    cin>>x>>y>>z;
+
+    ll sumc=0;
+    int n=x+y+z;
+    
+    vector<ll> id(n+5);
+    vector<ll> a(n+5),b(n+5),c(n+5);
+    
+    for(int i=1;i<=n;i++){
+        cin>>a[i]>>b[i]>>c[i];
+        id[i]=i,sumc+=c[i];
+    }
+
+    sort(id.begin()+1,id.begin()+n+1,[&](ll x,ll y){
+        return a[x]-b[x]>a[y]-b[y];
+    });
+
+    vector<ll> f(n+5,0),g(n+5,0);
+    priority_queue<ll> pa,pb;
+
+    f[0]=g[n+1]=0;
+    for(int i=1;i<=n;i++){
+        pa.push(c[id[i]]-a[id[i]]);
+        f[i]=f[i-1]-c[id[i]]+a[id[i]];
+        if(pa.size()>x){
+            f[i]+=pa.top();
+            pa.pop();
+        }
+    }
+
+    for(int i=n;i>=1;i--){
+        pb.push(c[id[i]]-b[id[i]]);
+        g[i-1]=g[i]-c[id[i]]+b[id[i]];
+        if(pb.size()>y){
+            g[i-1]+=pb.top();
+            pb.pop();
+        }
+    }
+
+    ll ans=-1ll<<60;
+    for(int i=x;i<=n-y;i++){
+        ans=max(ans,sumc+f[i]+g[i]);
+    }
+
+    cout<<ans<<"\n";
+
+    return 0;
+}
+```
