@@ -418,7 +418,7 @@
         <p>&copy; 2024 我的编程博客. All rights reserved.</p>
     </footer>
 
-    <script></script>
+    <script>
         // 扩展 marked 以支持数学公式
         const renderer = new marked.Renderer();
         const originalCode = renderer.code.bind(renderer);
@@ -462,7 +462,7 @@
 
         // 等待 KaTeX 加载完成
         window.addEventListener('load', () => {
-            fetch('../blogs/blog3.md')
+            fetch('./blog3.md')  // 修改这里：使用相对于当前HTML文件的路径
                 .then(response => response.text())
                 .then(text => {
                     // 预处理 LaTeX 公式

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGC018做题笔记</title>
+    <title>M_WC1S_M0的DIY博客简介</title>
     <link rel="icon" href="https://cdn.luogu.com.cn/upload/image_hosting/8o5xgnjt.png" type="image/x-icon">
     <link rel="shortcut icon" href="https://cdn.luogu.com.cn/upload/image_hosting/8o5xgnjt.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -28,13 +28,14 @@
             background-position: center;
             color: #2c3e50;
         }
+        /* ...existing nav, container, header, footer styles from content.html... */
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 2rem;
             display: grid;
-            grid-template-columns: 1fr minmax(auto, 800px) minmax(auto, 250px) 1fr;
+            grid-template-columns: 1fr minmax(auto, 900px) minmax(auto, 250px) 1fr;
             gap: 2rem;
             position: relative;
             z-index: 1;
@@ -461,7 +462,7 @@
 
         // 等待 KaTeX 加载完成
         window.addEventListener('load', () => {
-            fetch('../blogs/blog2.md')
+            fetch('./blog2.md')  // 修改这里：使用相对于当前HTML文件的路径
                 .then(response => response.text())
                 .then(text => {
                     // 预处理 LaTeX 公式

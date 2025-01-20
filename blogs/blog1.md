@@ -1,4 +1,4 @@
-### 不说闲话
+## 不说闲话
 
 概率和期望一直是自己非常薄弱的板块，最早学的时候其实就没有完全听懂。
 
@@ -6,11 +6,11 @@
 
 重修一下概率论，接下来是做题笔记，后面也会整理成讲题。
 
-### [P1365 WJMZBMR打osu! / Easy](https://www.luogu.com.cn/problem/P1365)
+## [P1365 WJMZBMR打osu! / Easy](https://www.luogu.com.cn/problem/P1365)
 
 期望入门题。
 
-#### 题目大意
+### 题目大意
 
 有一个长度为 $N$ 的字符串，由 `o`，`x` 和 `?` 组成。
 
@@ -20,7 +20,7 @@
 
 求总分数的期望值。
 
-#### 解题思路
+### 解题思路
 
 很容易想到 dp。
 
@@ -29,7 +29,6 @@
 
 接下来就可以分类讨论进行状态转移：
 
-##### 
 
 $\begin{cases} s_i=o \begin{cases} f_i= f_{i-1}+ 2\times g_{i-1} +1 \\ g_i=g_{i-1}+1 \end{cases}\\ \\ s_i=x \begin{cases} f_i= f_{i-1} \\ g_i=0 \\ \end{cases}\\ \\ s_i=?\ \ \begin{cases} f_i=f_{i-1}+g_{i-1}+0.5 \\ g_i=0.5\times g_{i-1} + 0.5  \end{cases}\\ \end{cases}$
 
@@ -37,15 +36,15 @@ $\begin{cases} s_i=o \begin{cases} f_i= f_{i-1}+ 2\times g_{i-1} +1 \\ g_i=g_{i-
 
 后续的相关练习：
 
-### [P4927 [1007] 梦美与线段树](https://www.luogu.com.cn/problem/P4927)
+## [P4927 [1007] 梦美与线段树](https://www.luogu.com.cn/problem/P4927)
 
 恶心题，式子并不难推，但是代码有一点繁琐。
 
-#### 题目大意
+### 题目大意
 
 有一颗线段树，每次按节点权值的占比的概率进入该子树，求走过的权值和的期望值。
 
-#### 解题思路
+### 解题思路
 
 令当前节点为 $rt$，则不难看出进入 $rt$ 左子树的期望为：
 
