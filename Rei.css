@@ -1,0 +1,391 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth;
+}
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-image: url('https://www.helloimg.com/i/2025/01/20/678db8e89e091.png');  /* 示例图片URL */
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    color: #2c3e50;
+}
+nav {
+    background: transparent;
+    backdrop-filter: blur(8px);
+    color: white;
+    padding: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    box-shadow: none;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+nav a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+    position: relative;
+}
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: width 0.3s;
+}
+nav a:hover::after {
+    width: 100%;
+}
+nav a.active::after {
+    width: 100%;
+}
+nav a:hover {
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 7fr 3fr;
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
+}
+header {
+    text-align: center;
+    padding: 4rem 0;
+    background: transparent;
+    color: white;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+.blog-post {
+    max-width: 600px;
+    margin: 0 auto 1.5rem auto;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.blog-post:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.95);
+}
+.blog-post h2 {
+    color: #2980b9;
+}
+.blog-post .date {
+    color: #7f8c8d;
+    margin: 0.5rem 0;
+}
+.blog-post a {
+    display: inline-block;
+    margin-top: 1rem;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+}
+.sidebar {
+    background: rgba(255, 255, 255, 0.85); /* 增加透明度 */
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+}
+
+/* 添加新的样式 */
+.profile {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    display: block;
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+}
+
+.profile-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 0.5rem 0;
+}
+
+.profile-info {
+    font-size: 0.9em;
+    color: #7f8c8d;
+    margin: 0.3rem 0;
+}
+.tags a {
+    display: inline-block;
+    background: #ecf0f1;
+    padding: 0.3rem 0.8rem;
+    margin: 0.3rem;
+    border-radius: 15px;
+    color: #2980b9;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+.tags a:hover {
+    background: #3498db;
+    color: white;
+}
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background: transparent;
+    color: white;
+    margin-top: 2rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.section {
+    max-width: 800px;
+    margin: 0 auto 2rem auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+}
+
+.section h2 {
+    color: #2980b9;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(41, 128, 185, 0.2);
+}
+
+.archive-list {
+    max-width: 600px;
+    margin: 0 auto;
+    list-style: none;
+}
+
+.archive-list li {
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.archive-list .date {
+    color: #7f8c8d;
+    font-size: 0.9em;
+    margin-right: 1rem;
+}
+
+.contact-info {
+    max-width: 600px;  /* 减小最大宽度 */
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;  /* 改为单列布局 */
+    gap: 1rem;
+    padding: 0 1.5rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-align: left;  /* 左对齐文本 */
+}
+
+/* 整个联系方式部分的容器 */
+#contact.section {
+    max-width: 800px;
+    margin: 0 auto 2rem auto;
+    padding: 2rem;
+}
+
+.contact-item i {
+    flex-shrink: 0;  /* 防止图标缩小 */
+    width: 30px;  /* 固定图标宽度 */
+}
+
+.contact-item span {
+    flex-grow: 1;  /* 文本占据剩余空间 */
+    white-space: nowrap;  /* 防止文本换行 */
+    overflow: hidden;
+    text-overflow: ellipsis;  /* 文本过长时显示省略号 */
+}
+
+.about-content {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.about-content p {
+    margin-bottom: 1rem;
+    line-height: 1.8;
+}
+
+.tags {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.blog-post:hover,
+.archive-list li:hover,
+.contact-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+@media screen and (max-width: 768px) {
+    /* 导航栏优化 */
+    nav {
+        padding: 1rem;
+    }
+    
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    /* 容器布局优化 */
+    .container {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    /* 博客文章卡片优化 */
+    .blog-post {
+        margin: 0.8rem auto;
+        padding: 1rem;
+        font-size: 0.95em;
+    }
+    
+    /* 侧边栏优化 */
+    .sidebar {
+        margin-top: 1rem;
+        padding: 1rem;
+    }
+    
+    /* 标题和段落优化 */
+    header {
+        padding: 2rem 1rem;
+    }
+    
+    header h1 {
+        font-size: 1.8em;
+    }
+    
+    header p {
+        font-size: 1em;
+    }
+    
+    /* 归档和关于我部分优化 */
+    .section {
+        padding: 1.5rem;
+        margin: 1rem auto;
+    }
+    
+    .archive-list {
+        padding: 0;
+    }
+    
+    .archive-list li {
+        padding: 0.8rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    /* 联系方式部分优化 */
+    .contact-info {
+        padding: 0;
+    }
+    
+    .contact-item {
+        padding: 0.8rem 1rem;
+    }
+    
+    /* 标签云优化 */
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    
+    .tags a {
+        font-size: 0.9em;
+        padding: 0.2rem 0.6rem;
+    }
+
+    /* 配置文件优化 */
+    .profile-info {
+        font-size: 0.85em;
+    }
+
+    .avatar {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+/* 针对更小屏幕的优化 */
+@media screen and (max-width: 480px) {
+    header h1 {
+        font-size: 1.5em;
+    }
+    
+    .blog-post h2 {
+        font-size: 1.2em;
+    }
+    
+    .blog-post {
+        font-size: 0.9em;
+    }
+    
+    .contact-item {
+        font-size: 0.9em;
+    }
+    
+    .section h2 {
+        font-size: 1.3em;
+    }
+}
+
+/* 优化滚动条样式 */
+@media screen and (max-width: 768px) {
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,0.2);
+        border-radius: 3px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: rgba(0,0,0,0.05);
+    }
+}

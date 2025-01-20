@@ -179,15 +179,114 @@ def delete_blog():
     except ValueError:
         print("请输入有效的数字！")
 
+def update_blog():
+    """更新现有博客"""
+    print("\n=== 更新博客 ===")
+    blogs = list_blogs()
+    if not blogs:
+        return
+        
+    try:
+        choice = input("\n请输入要更新的博客编号 (按q返回): ")
+        if choice.lower() == 'q':
+            return
+            
+        blog_index = int(choice) - 1
+        if 0 <= blog_index < len(blogs):
+            blog_file = blogs[blog_index]
+            blogs_dir = "./blogs"
+            blog_path = os.path.join(blogs_dir, blog_file)
+            
+            print("\n请选择要更新的内容：")
+            print("1. 更新标题")
+            print("2. 更新描述")
+            print("3. 更新Markdown内容")
+            print("4. 全部更新")
+            
+            update_choice = input("\n请选择 (1-4): ")
+            
+            with open(blog_path, "r", encoding="utf-8") as f:
+                content = f.read()
+                
+            with open("index.html", "r", encoding="utf-8") as f:
+                index_content = f.read()
+            
+            if update_choice in ["1", "4"]:
+                new_title = input("请输入新标题: ")
+                # 更新博客文件中的标题
+                start = content.find("<h1>") + 4
+                end = content.find("</h1>")
+                if start > 3 and end > 0:
+                    content = content[:start] + new_title + content[end:]
+                
+                # 更新index.html中的标题
+                blog_entry_start = index_content.find(f'<a href="blogs/{blog_file}">')
+                if blog_entry_start != -1:
+                    article_start = index_content.rfind('<article class="blog-post">', 0, blog_entry_start)
+                    h2_start = index_content.find("<h2>", article_start) + 4
+                    h2_end = index_content.find("</h2>", h2_start)
+                    if h2_start > 3 and h2_end > 0:
+                        index_content = index_content[:h2_start] + new_title + index_content[h2_end:]
+                
+                # 更新归档列表中的标题
+                archive_entry_start = index_content.find(f'<a href="blogs/{blog_file}">')
+                if archive_entry_start != -1:
+                    archive_text_start = archive_entry_start + len(f'<a href="blogs/{blog_file}">')
+                    archive_text_end = index_content.find('</a>', archive_text_start)
+                    if archive_text_end > 0:
+                        index_content = index_content[:archive_text_start] + new_title + index_content[archive_text_end:]
+            
+            if update_choice in ["2", "4"]:
+                new_description = input("请输入新描述: ")
+                # 更新index.html中的描述
+                blog_entry_start = index_content.find(f'<a href="blogs/{blog_file}">')
+                if blog_entry_start != -1:
+                    article_start = index_content.rfind('<article class="blog-post">', 0, blog_entry_start)
+                    p_start = index_content.find("<p>", article_start)
+                    p_start = index_content.find("<p>", p_start + 1) + 3  # 跳过日期，找到描述的<p>标签
+                    p_end = index_content.find("</p>", p_start)
+                    if p_start > 2 and p_end > 0:
+                        index_content = index_content[:p_start] + new_description + index_content[p_end:]
+            
+            if update_choice in ["3", "4"]:
+                new_md_path = input("请输入新的Markdown文件路径: ")
+                if not os.path.isabs(new_md_path):
+                    new_md_path = os.path.abspath(new_md_path)
+                
+                if os.path.exists(new_md_path):
+                    # 复制新的Markdown文件
+                    md_file = blog_file.replace(".html", ".md")
+                    shutil.copy(new_md_path, os.path.join(blogs_dir, md_file))
+                    print(f"Markdown文件已更新: {md_file}")
+                else:
+                    print(f"错误: 未找到Markdown文件 {new_md_path}")
+                    return
+            
+            # 保存更新后的内容
+            with open(blog_path, "w", encoding="utf-8") as f:
+                f.write(content)
+            
+            with open("index.html", "w", encoding="utf-8") as f:
+                f.write(index_content)
+            
+            print("\n博客更新成功！")
+            git_sync(f"Update blog: {blog_file}")
+            
+        else:
+            print("无效的博客编号！")
+    except ValueError:
+        print("请输入有效的数字！")
+
 def main():
     while True:
         print("\n=== 博客管理系统 ===")
         print("1. 查看所有博客")
         print("2. 创建新博客")
         print("3. 删除博客")
-        print("4. 退出")
+        print("4. 更新博客")
+        print("5. 退出")
         
-        choice = input("\n请选择操作 (1-4): ")
+        choice = input("\n请选择操作 (1-5): ")
         
         if choice == "1":
             list_blogs()
@@ -196,6 +295,8 @@ def main():
         elif choice == "3":
             delete_blog()
         elif choice == "4":
+            update_blog()
+        elif choice == "5":
             print("\n再见！")
             break
         else:
