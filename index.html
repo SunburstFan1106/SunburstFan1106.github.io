@@ -155,5 +155,23 @@
         });
     });
 </script>
+<div class="floating-tools">
+    <button id="themeToggle" class="tool-btn" title="切换主题">
+        <span class="light-icon">🌞</span>
+        <span class="dark-icon">🌙</span>
+    </button>
+    <button id="searchToggle" class="tool-btn" title="搜索">🔍</button>
+</div>
+
+<div id="searchModal" class="search-modal">
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="输入关键词搜索...">
+        <button id="closeSearch">✕</button>
+        <div id="searchResults"></div>
+    </div>
+</div>
+
+<!-- 引入工具脚本 -->
+<script src="/js/tools.js"></script> 
 </body>
 </html>

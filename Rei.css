@@ -9,11 +9,23 @@ html {
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    background-image: url('https://www.helloimg.com/i/2025/01/20/678db8e89e091.png');  /* 示例图片URL */
+    background-image: none;  /* 初始不加载背景 */
+    transition: background-image 0.3s ease-in;
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
     color: #2c3e50;
+}
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: #f0f0f0;  /* 临时背景色 */
+    background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7));
 }
 nav {
     background: transparent;
@@ -256,6 +268,34 @@ footer {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     background: rgba(255, 255, 255, 0.95);
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.3s ease-out;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 @media screen and (max-width: 768px) {
