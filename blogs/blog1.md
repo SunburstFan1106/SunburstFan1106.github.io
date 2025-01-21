@@ -1,4 +1,4 @@
-## 不说闲话
+### 不说闲话
 
 概率和期望一直是自己非常薄弱的板块，最早学的时候其实就没有完全听懂。
 
@@ -6,11 +6,11 @@
 
 重修一下概率论，接下来是做题笔记，后面也会整理成讲题。
 
-## [P1365 WJMZBMR打osu! / Easy](https://www.luogu.com.cn/problem/P1365)
+### [P1365 WJMZBMR打osu! / Easy](https://www.luogu.com.cn/problem/P1365)
 
 期望入门题。
 
-### 题目大意
+#### 题目大意
 
 有一个长度为 $N$ 的字符串，由 `o`，`x` 和 `?` 组成。
 
@@ -20,7 +20,7 @@
 
 求总分数的期望值。
 
-### 解题思路
+#### 解题思路
 
 很容易想到 dp。
 
@@ -29,6 +29,7 @@
 
 接下来就可以分类讨论进行状态转移：
 
+##### 
 
 $\begin{cases} s_i=o \begin{cases} f_i= f_{i-1}+ 2\times g_{i-1} +1 \\ g_i=g_{i-1}+1 \end{cases}\\ \\ s_i=x \begin{cases} f_i= f_{i-1} \\ g_i=0 \\ \end{cases}\\ \\ s_i=?\ \ \begin{cases} f_i=f_{i-1}+g_{i-1}+0.5 \\ g_i=0.5\times g_{i-1} + 0.5  \end{cases}\\ \end{cases}$
 
@@ -36,25 +37,25 @@ $\begin{cases} s_i=o \begin{cases} f_i= f_{i-1}+ 2\times g_{i-1} +1 \\ g_i=g_{i-
 
 后续的相关练习：
 
-## [P4927 [1007] 梦美与线段树](https://www.luogu.com.cn/problem/P4927)
+### [P4927 [1007] 梦美与线段树](https://www.luogu.com.cn/problem/P4927)
 
 恶心题，式子并不难推，但是代码有一点繁琐。
 
-### 题目大意
+#### 题目大意
 
 有一颗线段树，每次按节点权值的占比的概率进入该子树，求走过的权值和的期望值。
 
-### 解题思路
+#### 解题思路
 
 令当前节点为 $rt$，则不难看出进入 $rt$ 左子树的期望为：
 
-$sum_l \times P(l) = sum_l \times \frac {sum_l}{sum_{rt}} = \frac {sum_l^2}{sum_{rt}}$。
+$sum_l \times P(l) = sum_l \times \frac {sum_l}{sum_{rt}} = \frac {{sum_l}^2}{sum_{rt}}$。
 
 同理，进入 $rt$ 右子树的期望为：
 
-$sum_r \times P(r) = sum_r \times \frac {sum_r}{sum_{rt}} = \frac {sum_r^2}{sum_{rt}}$。
+$sum_r \times P(r) = sum_r \times \frac {sum_r}{sum_{rt}} = \frac {{sum_r}^2}{sum_{rt}}$。
 
-那么就可以得出 $rt$ 节点走过的权值和的期望值为：$\frac {sum_l^2+sum_r^2}{sum_{rt}}$。
+那么就可以得出 $rt$ 节点走过的权值和的期望值为：$\frac {{sum_l}^2+{sum_r}^2}{sum_{rt}}$。
 
 下半部分是很好维护的，仅需要维护区间和的线段树即可，而不难看出上半部分就是一个维护区间平方和。
 
@@ -64,7 +65,7 @@ $sum_r \times P(r) = sum_r \times \frac {sum_r}{sum_{rt}} = \frac {sum_r^2}{sum_
 
 考虑完全平方公式展开：
 
-$(sum_{rt} + len_{rt} \times \Delta V)^2 = {sum_{rt}^2 + 2 \times len_{rt} \times sum_{rt} \times \Delta V + len_{rt}^2} \times {\Delta V}^2 $。
+$(sum_{rt} + len_{rt} \times \Delta V)^2 = {sum_{rt}^2 + 2 \times len_{rt} \times sum_{rt} \times \Delta V + {len_{rt}}^2} \times {\Delta V}^2 $。
 
 $len$ 和 ${len}^2$ 都可以在线段树的 `build` 阶段维护。
 
@@ -74,9 +75,9 @@ $len$ 和 ${len}^2$ 都可以在线段树的 `build` 阶段维护。
 
 再拆开来：
 
-$len_{rt} \times sum_{rt} + len_{rt}^2 \times \Delta V$。
+$len_{rt} \times sum_{rt} + {len_{rt}}^2 \times \Delta V$。
 
-所以每次更新，$len_{rt} \times sum_{rt}$ 只需要加上 $len_{rt}^2 \times \Delta V$ 即可， $len^2$ 前边已经说过如何维护了。
+所以每次更新，$len_{rt} \times sum_{rt}$ 只需要加上 ${len_{rt}}^2 \times \Delta V$ 即可， $len^2$ 前边已经说过如何维护了。
 
 乍一看，这棵线段树要维护的东西似乎有点多，比较繁琐。
 
@@ -146,7 +147,39 @@ struct Sgt_Tree{
 }Tr;
 ```
 
-[P3317 [SDOI2014] 重建](https://www.luogu.com.cn/problem/P3317)
+### [P3317 [SDOI2014] 重建](https://www.luogu.com.cn/problem/P3317)
+
+概率和线性代数的结合。
+
+#### 题目大意
+
+一个图中每条边都有一定概率出现，问生成的图**恰好**是一颗树的概率。
+
+#### 解题思路
+
+题目要求 $ans = \sum _{T} \ \ [\ \ \prod _{e \in T} p_e \times \prod _{e \notin T} (1-p_e) \ \ ]$。
+
+根据矩阵树定理：
+
+定义基尔霍夫矩阵为：无向图的邻接矩阵减去度数矩阵。
+
+那么生成树的个数即为基尔霍夫矩阵的任意 $k-1$ 阶主子式。
+
+本题求得是概率，那么我们可以简单推广一下：
+
+$|\text K| = \sum _{T} \prod _{e \in T} p_e$。
+
+但是注意到矩阵树定理只能求生成图**至少是一颗树的概率**，怎样才能求出 $\sum _T \prod _{e\notin T (1-p_e)} $ 呢？
+
+考虑：
+
+$\sum _T \prod _{e\notin T } (1-p_e) = \sum _T \frac {\prod _e (1-p_e)} {\prod _{e\in T} (1-p_e)}$
+ 
+$ans= \prod _e (1-p_e) \times \sum_T \prod _{e \in T}  \frac {p_e}{1-p_e}$
+
+我们直接把无向图的邻接矩阵的边权设为 $\frac {p_e}{1-p_e}$，那么 $\sum_T \prod _{e \in T}  \frac {p_e}{1-p_e}$ 就可以用矩阵树定理，求 $n-1$ 阶主子式，时间复杂度 $O(N^3)$，前半部分可以边读入边计算，最后乘起来，这道题就做完了。
+
+写的时候需要注意精度问题，每次读进概率后加上 $10^{-8}$ 的 $eps$。
 
 [P5405 [CTS2019] 氪金手游](https://www.luogu.com.cn/problem/P5405)
 
