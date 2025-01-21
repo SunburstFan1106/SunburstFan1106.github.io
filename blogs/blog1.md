@@ -181,6 +181,7 @@ $ans= \prod _e (1-p_e) \times \sum_T \prod _{e \in T}  \frac {p_e}{1-p_e}$
 
 写的时候需要注意精度问题，每次读进概率后加上 $10^{-8}$ 的 $eps$。
 
+
 [P5405 [CTS2019] 氪金手游](https://www.luogu.com.cn/problem/P5405)
 
 [P2081 [NOI2012] 迷失游乐园](https://www.luogu.com.cn/problem/P2081)
