@@ -49,13 +49,13 @@ $\begin{cases} s_i=o \begin{cases} f_i= f_{i-1}+ 2\times g_{i-1} +1 \\ g_i=g_{i-
 
 令当前节点为 $rt$，则不难看出进入 $rt$ 左子树的期望为：
 
-$sum_l \times P(l) = sum_l \times \frac {sum_l}{sum_{rt}} = \frac {{sum_l}^2}{sum_{rt}}$。
+$sum_l \times P(l) = sum_l \times \frac {sum_l}{sum_{rt}} = \frac {sum_l^2}{sum_{rt}}$。
 
 同理，进入 $rt$ 右子树的期望为：
 
-$sum_r \times P(r) = sum_r \times \frac {sum_r}{sum_{rt}} = \frac {{sum_r}^2}{sum_{rt}}$。
+$sum_r \times P(r) = sum_r \times \frac {sum_r}{sum_{rt}} = \frac {sum_r^2}{sum_{rt}}$。
 
-那么就可以得出 $rt$ 节点走过的权值和的期望值为：$\frac {{sum_l}^2+{sum_r}^2}{sum_{rt}}$。
+那么就可以得出 $rt$ 节点走过的权值和的期望值为：$\frac {sum_l^2+sum_r^2}{sum_{rt}}$。
 
 下半部分是很好维护的，仅需要维护区间和的线段树即可，而不难看出上半部分就是一个维护区间平方和。
 
@@ -65,7 +65,7 @@ $sum_r \times P(r) = sum_r \times \frac {sum_r}{sum_{rt}} = \frac {{sum_r}^2}{su
 
 考虑完全平方公式展开：
 
-$(sum_{rt} + len_{rt} \times \Delta V)^2 = {sum_{rt}^2 + 2 \times len_{rt} \times sum_{rt} \times \Delta V + {len_{rt}}^2} \times {\Delta V}^2 $。
+$(sum_{rt} + len_{rt} \times \Delta V)^2 = sum_{rt}^2 + 2 \times len_{rt} \times sum_{rt} \times \Delta V + len_{rt}^2 \times {\Delta V}^2 $。
 
 $len$ 和 ${len}^2$ 都可以在线段树的 `build` 阶段维护。
 
@@ -75,9 +75,9 @@ $len$ 和 ${len}^2$ 都可以在线段树的 `build` 阶段维护。
 
 再拆开来：
 
-$len_{rt} \times sum_{rt} + {len_{rt}}^2 \times \Delta V$。
+$len_{rt} \times sum_{rt} + len_{rt}^2 \times \Delta V$。
 
-所以每次更新，$len_{rt} \times sum_{rt}$ 只需要加上 ${len_{rt}}^2 \times \Delta V$ 即可， $len^2$ 前边已经说过如何维护了。
+所以每次更新，$len_{rt} \times sum_{rt}$ 只需要加上 $len_{rt}^2 \times \Delta V$ 即可， $len^2$ 前边已经说过如何维护了。
 
 乍一看，这棵线段树要维护的东西似乎有点多，比较繁琐。
 
