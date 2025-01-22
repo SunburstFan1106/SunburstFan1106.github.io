@@ -9,6 +9,8 @@ html {
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
+
+    /*自己放的背景图片*/
     background-image: url('https://www.helloimg.com/i/2025/01/20/678db8e89e091.png');  /* 示例图片URL */
     background-attachment: fixed;
     background-size: cover;
