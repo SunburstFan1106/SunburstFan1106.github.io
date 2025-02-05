@@ -12,7 +12,7 @@
     <link rel="shortcut icon" href="https://cdn.luogu.com.cn/upload/image_hosting/8o5xgnjt.png" type="image/x-icon">
 
     <!-- 自己写的 css 渲染 -->
-    <link rel="stylesheet" href="Rei.css">
+    <link rel="stylesheet" href="/style/Rei.css">
 </head>
 <body>
     <nav>
@@ -36,16 +36,16 @@
 
     <div class="container">
         <main>
-                        <article class="blog-post">
+            <article class="blog-post">
                 <h2>K0be_Bl0gant 1.0 --基于 Github Pages 的个人博客搭建</h2>
                 <p class="date">2025-01-22</p>
-                <p>搭建个人客的简单教程</p>
+                <p>搭建个人博客的简单教程</p>
                 <a href="blogs/blog6.html">阅读更多</a>
             </article>
-<article class="blog-post">
+            <article class="blog-post">
                 <h2>AGC010做题笔记</h2>
                 <p class="date">2025-01-21</p>
-                <p>搭建个人博客的简单教程</p>
+                <p>做题笔记</p>
                 <a href="blogs/blog5.html">阅读更多</a>
             </article>
             <article class="blog-post">
@@ -84,8 +84,9 @@
                 <p class="profile-info">博客创建于: 2024-01-19</p>
             </div>
             <h3>关于我</h3>
-            <p>搭建自己的个人博客</p>
-            <p class="profile-info">联系方式: daniel102217@126.com</p>
+            <p>来自上海市梅陇中学</p>
+            <h3>联系方式</h3>
+            <p>邮箱:daniel102217@126.com</p>
             <h3>标签云</h3>
             <div class="tags">
                 <a href="#">算法</a>
@@ -166,45 +167,7 @@
     <footer>
         <p>&copy; 2024 M_WC1S_M0的博客. All rights reserved.</p>
     </footer>
-    <script>
-    // 页面滚动时更新导航高亮
-    window.addEventListener('scroll', () => {
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('nav a');
-        
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            if (pageYOffset >= sectionTop - 60) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').slice(1) === current) {
-                link.classList.add('active');
-            }
-        });
-    });
-
-    // 主题切换逻辑
-    const themeToggle = document.getElementById('theme-toggle');
-    const body = document.body;
-    
-    // 检查本地存储中的主题设置
-    const currentTheme = localStorage.getItem('theme');
-    if (currentTheme) {
-        body.classList.add(currentTheme);
-        themeToggle.textContent = currentTheme === 'dark-mode' ? '🌞' : '🌙';
-    }
-    
-    themeToggle.addEventListener('click', () => {
-        body.classList.toggle('dark-mode');
-        const isDark = body.classList.contains('dark-mode');
-        localStorage.setItem('theme', isDark ? 'dark-mode' : '');
-        themeToggle.textContent = isDark ? '🌞' : '🌙';
-    });
+    <script src="script/main.js"></script>
 </script>
 </body>
 </html>

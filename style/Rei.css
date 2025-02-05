@@ -474,3 +474,18 @@ footer {
     background:  #64b5f6;
     color: white;
 }
+
+/* 添加深色模式下的链接颜色 */
+.dark-mode .archive-list a,
+.dark-mode .contact-item a,
+.dark-mode .blog-post a {
+    color: #90caf9;  /* 使用更亮的蓝色 */
+    text-decoration: none;
+}
+
+.dark-mode .archive-list a:hover,
+.dark-mode .contact-item a:hover,
+.dark-mode .blog-post a:hover {
+    color: #64b5f6;  /* 悬停时稍微暗一些 */
+    text-decoration: underline;
+}

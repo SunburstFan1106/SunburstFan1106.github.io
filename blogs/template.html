@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- ...existing head content... -->
+    <link rel="stylesheet" href="../Rei_blog.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="../index.html">首页</a></li>
+            <li><a href="../index.html#archive">归档</a></li>
+            <li><a href="../index.html#about">关于我</a></li>
+            <li><a href="../index.html#contact">联系方式</a></li>
+        </ul>
+        <button id="theme-toggle" class="theme-toggle">
+            🌞
+        </button>
+    </nav>
+
+    <!-- ...existing content... -->
+
+    <footer>
+        <!-- ...existing footer content... -->
+    </footer>
+
+    <script>
+    // 主题切换逻辑
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    
+    // 检查本地存储中的主题设置
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme) {
+        body.classList.add(currentTheme);
+        themeToggle.textContent = currentTheme === 'dark-mode' ? '🌞' : '🌙';
+    }
+    
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        const isDark = body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark-mode' : '');
+        themeToggle.textContent = isDark ? '🌞' : '🌙';
+    });
+    </script>
+</body>
+</html>

@@ -378,3 +378,93 @@ nav a:hover {
         gap: 0.8rem;
     }
 }
+
+/* 深色模式样式 */
+.dark-mode {
+    background-image: url('https://cdn.luogu.com.cn/upload/image_hosting/kmx7ex1p.png') !important;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+.dark-mode .blog-content {
+    background: rgba(30, 30, 30, 0.9);
+    color: #ffffff;
+}
+
+.dark-mode .sidebar {
+    background: rgba(30, 30, 30, 0.9);
+    color: #ffffff;
+}
+
+.dark-mode .blog-content h2,
+.dark-mode .blog-content h3,
+.dark-mode .blog-content h4,
+.dark-mode .sidebar h3 {
+    color: #64b5f6;
+}
+
+.dark-mode .blog-content a {
+    color: #90caf9;
+}
+
+.dark-mode .blog-content a:hover {
+    color: #64b5f6;
+}
+
+.dark-mode #toc a {
+    color: #b0bec5;
+}
+
+.dark-mode #toc a[data-level="h2"] {
+    color: #90caf9;
+}
+
+.dark-mode #toc a[data-level="h3"] {
+    color: #b0bec5;
+}
+
+.dark-mode #toc a[data-level="h4"] {
+    color: #78909c;
+}
+
+.dark-mode #toc a:hover,
+.dark-mode #toc a.active {
+    background: rgba(144, 202, 249, 0.1);
+    color: #90caf9;
+}
+
+.dark-mode .blog-content code:not(pre code) {
+    background: rgba(144, 202, 249, 0.1);
+    color: #ff9090;
+}
+
+.dark-mode .katex-display {
+    background: rgba(30, 30, 30, 0.9);
+}
+
+/* 主题切换按钮样式 */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    cursor: pointer;
+    font-size: 1.2em;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
