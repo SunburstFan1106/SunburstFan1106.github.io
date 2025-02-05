@@ -22,6 +22,9 @@
             <li><a href="#about">关于我</a></li>·
             <li><a href="#contact">联系方式</a></li>
         </ul>
+        <button id="theme-toggle" class="theme-toggle">
+            🌞
+        </button>
     </nav>
 
     <header>
@@ -183,6 +186,24 @@
                 link.classList.add('active');
             }
         });
+    });
+
+    // 主题切换逻辑
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    
+    // 检查本地存储中的主题设置
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme) {
+        body.classList.add(currentTheme);
+        themeToggle.textContent = currentTheme === 'dark-mode' ? '🌞' : '🌙';
+    }
+    
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        const isDark = body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark-mode' : '');
+        themeToggle.textContent = isDark ? '🌞' : '🌙';
     });
 </script>
 </body>
