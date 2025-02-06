@@ -41,7 +41,15 @@ marked.setOptions({
 
 // 等待 KaTeX 加载完成
 window.addEventListener('load', () => {
-    fetch('../blogs/blog1.md')
+    // 获取当前页面的文件名
+    const path = window.location.pathname;
+    const filename = path.substring(path.lastIndexOf('/') + 1);
+    const blogName = filename.replace('.html', ''); // 提取 blog1, blog2 等
+
+    // 构造 Markdown 文件的路径
+    const mdFilePath = `../blogs/${blogName}.md`;
+
+    fetch(mdFilePath)
         .then(response => response.text())
         .then(text => {
             // 预处理 LaTeX 公式
@@ -241,6 +249,7 @@ function generateTOC() {
     // 初始化激活状态
     updateActiveHeading();
 }
+// 主题切换逻辑
 const themeToggle = document.getElementById('theme-toggle');
 const body = document.body;
 
