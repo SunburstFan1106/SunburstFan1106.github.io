@@ -332,14 +332,12 @@ namespace EK{ //EK+SPFA求最大流最小费用
 
 然后对于每个点对 $(i,j)$ 列出方程：（按照同文、同理、一文一理、一理一文的顺序）。
 
-$
-\begin{cases}
+$\begin{cases}
 c + d = B_i + B_i + D_{i,j} \ \ \ \ (1) \\
 a + b = A_j + A_j + C_{i,j} \ \ \ \ (2) \\
 b + c + e = B_i + A_j + C_{i,j} + D_{i,j} \ \ \ \ (3) \\
 a + d + f = A_i + B_j + C_{i,j} + D_{i,j} \ \ \ \ (4) \\
-\end{cases}
-$
+\end{cases}$
 
 理解一下，**这些边的贡献等于割掉这些边后会失去的贡献**。
 
@@ -349,12 +347,10 @@ $e=f$，所以 $e=f=\frac{C_{i,j}+D_{i,j}}{2}$
 
 由于方程的解需要对称，注意到当 $a=A_i+\frac {c_{i,j}}{2}$ 时，解得：
 
-$
-\begin{cases}
+$\begin{cases}
 a = A_i+\frac {c_{i,j}}{2} , b = A_j+\frac {c_{i,j}}{2}\\
 \\
 c = B_i+\frac {d_{i,j}}{2} , d = B_j+\frac {d_{i,j}}{2}\\
-\end{cases}
-$
+\end{cases}$
 
 根据这个方程建边，跑 Dinic 求出最小割，最后用总和减去最小割容量就是答案。
