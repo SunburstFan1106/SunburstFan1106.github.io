@@ -130,7 +130,7 @@ int main(){
 
 时间复杂度 $O(m \times \log m)$
 
-#### 核心代码（已包含在你的代码中）
+#### 核心代码
 
 ```c++
 void FFT(vector<db>&a,bool invert){
