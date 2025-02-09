@@ -100,7 +100,7 @@ int main(){
     return 0;
 }
 ```
-# G - Fine Triplets
+## G - Fine Triplets
 
 ### 题目大意
 
@@ -110,7 +110,7 @@ int main(){
 
 求集合 $S$ 中有多少个好三元组。
 
-#### 解题思路
+### 解题思路
 
 利用 FFT 加速卷积运算，快速统计。
 
