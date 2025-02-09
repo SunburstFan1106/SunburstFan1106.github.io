@@ -6,7 +6,7 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    background-image: url('https://www.helloimg.com/i/2025/01/20/678db8e89e091.png');
+    background-image: url('https://cdn.luogu.com.cn/upload/image_hosting/dc4i8inz.png');
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
@@ -15,7 +15,7 @@ body {
 /* ...existing nav, container, header, footer styles from content.html... */
 
 .container {
-    max-width: 1200px;  /* 减小最大宽度 */
+    max-width: 1600px;  /* 减小最大宽度 */
     margin: 0 auto;
     padding: 2rem;
     display: grid;
@@ -35,6 +35,7 @@ body {
     line-height: 1.8;
     font-size: 16px;
     text-align: left;  /* 修改为左对齐 */
+    max-width: 1200px;
 }
 
 .blog-content h2, .blog-content h3, .blog-content h4 {
@@ -126,6 +127,7 @@ body {
     height: fit-content;
     padding: 1rem;
     border-radius: 12px;
+    max-width: 300px;
 }
 
 .sidebar h3 {
@@ -229,13 +231,13 @@ header p {
     max-width: 100%;
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1600px) {
     .container {
         grid-template-columns: 1fr minmax(auto, 700px) minmax(auto, 200px) 1fr;
     }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1200px) {
     .container {
         grid-template-columns: 1fr minmax(auto, 800px) 1fr;
     }
@@ -378,6 +380,7 @@ nav a:hover {
         gap: 0.8rem;
     }
 }
+
 
 /* 深色模式样式 */
 .dark-mode {
