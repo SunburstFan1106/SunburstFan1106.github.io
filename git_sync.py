@@ -16,8 +16,8 @@ def git_sync(commit_message):
         # Git commit
         subprocess.run(['git', 'commit', '-m', commit_message], check=True)
         
-        # Git push
-        subprocess.run(['git', 'push'], check=True)
+        # # Git push
+        # subprocess.run(['git', 'push'], check=True)
         
         print("Git同步完成！")
         return True
