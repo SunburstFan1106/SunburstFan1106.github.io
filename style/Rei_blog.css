@@ -73,7 +73,7 @@ body {
     overflow-x: auto;
     font-size: 0.9em;
     line-height: 1.6;
-    font-family: 'Jetbrains Mono', Consolas, Monaco, monospace;
+    font-family: 'Jetbrains Mono',Sarasa Mono, TCConsolas, Monaco, monospace;
     background: transparent;
 }
 
@@ -81,7 +81,7 @@ body {
     background: rgba(248, 249, 250, 0.9);
     padding: 0.2em 0.4em;
     border-radius: 3px;
-    font-family: 'Jetbrains Mono', Consolas, Monaco, monospace;
+    font-family: 'Jetbrains Mono',Sarasa Mono, Consolas, Monaco, monospace;
     font-size: 0.9em;
 }
 
@@ -89,7 +89,7 @@ body {
     background: rgba(40, 44, 52, 0.05);
     padding: 0.2em 0.4em;
     border-radius: 3px;
-    font-family: 'Jetbrains Mono', Consolas, Monaco, monospace;
+    font-family: 'Jetbrains Mono',Sarasa Mono, Consolas, Monaco, monospace;
     font-size: 0.9em;
     color: #e06c75;
 }
