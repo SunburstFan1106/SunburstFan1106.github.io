@@ -266,3 +266,36 @@ themeToggle.addEventListener('click', () => {
     localStorage.setItem('theme', isDark ? 'dark-mode' : '');
     themeToggle.textContent = isDark ? '🌞' : '🌙';
 });
+
+// 添加警告、注意等扩展
+const admonitionExtension = {
+    name: 'admonition',
+    level: 'block',
+    start(src) {
+        // 检查是否以 > [!keyword] 开头
+        const match = src.match(/^>\s*\[!(warning|caution|note|important)\]/i);
+        return match ? match.index : undefined;
+    },
+    tokenizer(src, tokens) {
+        // 正则匹配整个 admonition 块：行开头 "> [!keyword]" 后面是块内容
+        const rule = /^>\s*\[!(warning|caution|note|important)\]\s*\n((?:^>.*\n?)+)/im;
+        const match = rule.exec(src);
+        if (match) {
+            // 去除每行前的 '> ' 前缀
+            const text = match[2].split('\n').map(line => line.replace(/^>\s?/, "")).join('\n').trim();
+            return {
+                type: 'admonition',
+                raw: match[0],
+                level: match[1].toLowerCase(),
+                text: text
+            };
+        }
+    },
+    renderer(token) {
+        // 渲染成自定义的 div 块，注意这里调用 this.parser.parse(token.text) 解析里面的内容
+        return `<div class="admonition admonition-${token.level}">\n${this.parser.parse(token.text)}\n</div>\n`;
+    }
+};
+
+// 把扩展加入 marked
+marked.use({ extensions: [admonitionExtension] });
