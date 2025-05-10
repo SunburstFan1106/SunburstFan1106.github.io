@@ -36,13 +36,13 @@
 
 #### 题目大意
 
-给定一个长度为 $n$ 的序列,初始全为 $0$。每次给定区间 $[l,r]$,将区间内的 $0$ 和 $-1$ 互相翻转。每次操作后,求出能够以当前序列为基础,进行若干次填数操作得到的互不等价序列数量。
+给定一个长度为 $n$ 的序列，初始全为 $0$。每次给定区间 $[l,r]$，将区间内的 $0$ 和 $-1$ 互相翻转。每次操作后，求出能够以当前序列为基础，进行若干次填数操作得到的互不等价序列数量。
 
 #### 解题思路
 
-对于每个位置,我们只关心它是 $0$ 还是 $-1$。用线段树维护区间翻转操作。
+对于每个位置，我们只关心它是 $0$ 还是 $-1$。用线段树维护区间翻转操作。
 
-$n \leq 10^{18}$,不能直接建树,考虑离散化，每个 $0$ 可以贡献 $3$ 种状态(保持 $0$ or $-1$ or 正数)。
+$n \leq 10^{18}$，不能直接建树，考虑离散化，每个 $0$ 可以贡献 $3$ 种状态(保持 $0$ or $-1$ or 正数)。
 
 因此答案为 $3^{cnt0}$。
 
@@ -102,7 +102,7 @@ printf("%lld\n",qpow(3,SGT::tree[1][0]));
 
 由于自己太菜了，每次的 ABC 都会留一些没做完的题。
 
-### [\[ABC391F] K-th Largest Triplet](https://www.luogu.com.cn/problem/AT_abc391_f)
+### [\[ABC391F\] K-th Largest Triplet](https://www.luogu.com.cn/problem/AT_abc391_f)
 
 #### 题目大意
 
@@ -120,7 +120,7 @@ $1\leq N \leq 2\times 10^5$，$1\leq K \leq \min(N^3,5\times10^5)$。
 
 对于 $K$,枚举出所有 $f(i,j,k)$ 满足 $i\times j\times k \leq K$，然后找出第 $K$ 大的 $f(i,j,k)$ 即可。
 
-### [\[ABC391G] Many LCS](https://www.luogu.com.cn/problem/AT_abc391_g)
+### [\[ABC391G\] Many LCS](https://www.luogu.com.cn/problem/AT_abc391_g)
 
 #### 题目大意
 有一个长度为 $N$ 的小写英文字符串 $S$。需要统计对于所有可能的长度为 $M$ 的小写英文字符串 $T$，它们与 $S$ 的最长公共子序列长度为 $0,1,2,\dots,N$ 各自为多少。
@@ -162,7 +162,7 @@ for(int i=1;i<=n;i++){
 
 `calc` 部分略。
 
-### [[ABC392E] Cables and Servers](https://www.luogu.com.cn/problem/AT_abc392_e)
+### [\[ABC392E\] Cables and Servers](https://www.luogu.com.cn/problem/AT_abc392_e)
 
 #### 题目大意
 
@@ -176,7 +176,7 @@ for(int i=1;i<=n;i++){
 
 赛时没有场切纯粹因为自己太弱智，交了n发没过。。。
 
-### [[ABC394F] Alkane](https://www.luogu.com.cn/problem/AT_abc394_f)
+### [\[ABC394F\ Alkane](https://www.luogu.com.cn/problem/AT_abc394_f)
 
 #### 题目大意
 
@@ -191,6 +191,3 @@ for(int i=1;i<=n;i++){
 - j：当前节点是否为度数为4的点(0/1)
 
 其中 `f[u][i][j]` 的值表示满足条件的最大点数。
-
-
-
